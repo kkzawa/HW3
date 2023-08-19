@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Форма ввода данных</title>
+</head>
+<body>
+    <form id="myForm">
+        <label for="first_name">Имя:</label>
+        <input type="text" id="first_name" required><br><br>
+
+        <label for="last_name">Фамилия:</label>
+        <input type="text" id="last_name" required><br><br>
+
+        <input type="button" value="Отправить" onclick="postData()">
+    </form>
+
+    <script>
+        function postData() {
+            const firstName = document.getElementById("first_name").value;
+            const lastName = document.getElementById("last_name").value;
+
+            const data = {
+                first_name: firstName,
+                last_name: lastName
+            };
+
+            fetch("http://localhost:3000/srvr", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                
+            })
+            .catch(error => {
+                console.error("Ошибка:", error);
+            });
+        }
+    </script>
+</body>
+</html>
+
